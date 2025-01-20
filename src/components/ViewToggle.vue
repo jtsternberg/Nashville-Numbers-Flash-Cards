@@ -1,19 +1,18 @@
 <script setup>
-const props = defineProps({
+const emit = defineEmits(['toggle'])
+defineProps({
    isCheatSheet: {
       type: Boolean,
       required: true
    }
 })
-
-const emit = defineEmits(['toggle'])
 </script>
 
 <template>
    <div class="flex justify-center mb-6">
       <button
          class="btn btn-primary"
-         @click="emit('toggle')"
+         @click="$emit('toggle')"
          :aria-pressed="isCheatSheet"
       >
          {{ isCheatSheet ? 'Show Flashcards' : 'Show Cheat Sheet' }}

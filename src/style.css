@@ -9,7 +9,12 @@
    }
 
    .btn-primary {
-      @apply bg-indigo-600 text-white hover:bg-indigo-700
-             focus:ring-indigo-500;
+      @apply bg-purple-600 text-white hover:bg-purple-700
+             focus:ring-purple-500;
+   }
+
+   .btn-outline {
+      @apply bg-transparent text-purple-600 hover:bg-purple-100
+             focus:ring-purple-500;
    }
 }

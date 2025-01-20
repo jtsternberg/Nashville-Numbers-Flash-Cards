@@ -1,5 +1,6 @@
 {
    "keys": ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"],
+   "keysNoSharpsAndFlats": ["A", "B", "C", "D", "E", "F", "G"],
    "numbers": [
       { "number": "1", "quality": "major" },
       { "number": "2", "quality": "minor" },
@@ -7,6 +8,17 @@
       { "number": "4", "quality": "major" },
       { "number": "5", "quality": "major" },
       { "number": "6", "quality": "minor" },
-      { "number": "7", "quality": "diminished" }
+      { "number": "7", "quality": "diminished" },
+      { "number": "2maj", "quality": "major", "isException": true },
+      { "number": "3maj", "quality": "major", "isException": true },
+      { "number": "4min", "quality": "minor", "isException": true },
+      { "number": "5min", "quality": "minor", "isException": true },
+      { "number": "6maj", "quality": "major", "isException": true },
+      { "number": "7maj", "quality": "major", "isException": true },
+      { "number": "b3", "quality": "major", "isException": true },
+      { "number": "b7", "quality": "major", "isException": true },
+      { "number": "#5", "quality": "major", "isException": true },
+      { "number": "#1", "quality": "diminished", "isException": true },
+      { "number": "#4", "quality": "diminished", "isException": true }
    ]
 }

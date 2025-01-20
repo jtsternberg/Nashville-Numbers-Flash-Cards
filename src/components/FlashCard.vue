@@ -10,6 +10,10 @@ const props = defineProps({
    currentKey: {
       type: String,
       required: true
+   },
+   cardClasses: {
+      type: Object,
+      default: () => ({})
    }
 })
 
@@ -22,12 +26,18 @@ const chord = computed(() =>
 function toggleFlip() {
    isFlipped.value = !isFlipped.value
 }
+
+// Expose the toggleFlip method to the parent component
+defineExpose({ toggleFlip })
 </script>
 
 <template>
    <div
-      class="w-72 h-96 perspective-1000 mx-auto cursor-pointer select-none"
-      :class="{ 'is-flipped': isFlipped }"
+      class="w-72 h-96 perspective-1000 mx-auto cursor-pointer select-none transition-all duration-300"
+      :class="[
+         { 'is-flipped': isFlipped },
+         cardClasses
+      ]"
       @click="toggleFlip"
       role="button"
       tabindex="0"
@@ -36,18 +46,16 @@ function toggleFlip() {
    >
       <div class="relative w-full h-full transition-transform duration-600 transform-style-preserve-3d">
          <div
-            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg"
-            :class="{ 'backface-hidden': true }"
+            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg backface-hidden"
             aria-hidden="isFlipped"
          >
-            <div class="text-6xl font-bold text-indigo-600">{{ number.number }}</div>
+            <div class="text-6xl font-bold text-indigo-600">{{ chord }}</div>
          </div>
          <div
-            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg transform rotate-y-180"
-            :class="{ 'backface-hidden': true }"
+            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg backface-hidden rotate-y-180"
             aria-hidden="!isFlipped"
          >
-            <div class="text-5xl font-bold text-gray-700">{{ chord }}</div>
+            <div class="text-5xl font-bold text-gray-700">{{ number.number }}</div>
          </div>
       </div>
    </div>
@@ -64,6 +72,7 @@ function toggleFlip() {
 
 .backface-hidden {
    backface-visibility: hidden;
+   -webkit-backface-visibility: hidden;
 }
 
 .rotate-y-180 {

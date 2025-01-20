@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue'
+import KeyCard from './KeyCard.vue'
 
-const props = defineProps({
+defineProps({
    keys: {
       type: Array,
       required: true
@@ -16,20 +16,27 @@ const emit = defineEmits(['select-key'])
 </script>
 
 <template>
-   <div class="flex flex-wrap gap-2 justify-center mb-6">
-      <button
+   <div class="flex overflow-x-auto overflow-y-visible gap-1 py-8 px-4 min-h-[12rem]">
+      <KeyCard
          v-for="key in keys"
          :key="key"
-         @click="emit('select-key', key)"
-         :class="[
-            'btn',
-            currentKey === key
-               ? 'bg-indigo-600 text-white'
-               : 'bg-gray-100 hover:bg-gray-200'
-         ]"
-         :aria-pressed="currentKey === key"
-      >
-         {{ key }}
-      </button>
+         :model-value="key"
+         :is-selected="currentKey === key"
+         @update:model-value="$emit('select-key', key)"
+         @select="$emit('select-key', key)"
+      />
    </div>
 </template>
+
+<style scoped>
+.flex {
+   -webkit-overflow-scrolling: touch;
+   scrollbar-width: none; /* Firefox */
+   position: relative;
+   z-index: 0;
+}
+
+.flex::-webkit-scrollbar {
+   display: none; /* Chrome, Safari */
+}
+</style>
