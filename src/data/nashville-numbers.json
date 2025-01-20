@@ -1,0 +1,12 @@
+{
+   "keys": ["A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"],
+   "numbers": [
+      { "number": "1", "quality": "major" },
+      { "number": "2", "quality": "minor" },
+      { "number": "3", "quality": "minor" },
+      { "number": "4", "quality": "major" },
+      { "number": "5", "quality": "major" },
+      { "number": "6", "quality": "minor" },
+      { "number": "7", "quality": "diminished" }
+   ]
+}
