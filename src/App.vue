@@ -6,6 +6,7 @@ import KeySelector from './components/KeySelector.vue'
 import ViewToggle from './components/ViewToggle.vue'
 import CheatSheet from './components/CheatSheet.vue'
 import SettingsPanel from './components/SettingsPanel.vue'
+import InfoPanel from './components/InfoPanel.vue'
 import { useKeyboardNav } from './composables/useKeyboardNav'
 import { useSettingsStore } from './stores/settings'
 
@@ -151,9 +152,7 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
       <div class="mb-2">
          <div class="flex items-center justify-between mb-2">
             <h1 class="text-xl font-semibold text-white">Nashville Numbers</h1>
-            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-               <span class="text-sm text-white">{{ totalNumbers }}</span>
-            </div>
+            <InfoPanel />
          </div>
 
          <!-- Progress Indicators -->

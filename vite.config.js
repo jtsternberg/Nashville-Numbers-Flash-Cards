@@ -8,6 +8,9 @@ export default defineConfig({
       outDir: 'nashville-numbers',
       emptyOutDir: true
    },
+   define: {
+      __BUILD_TIME__: JSON.stringify(new Date().toLocaleDateString())
+   },
    plugins: [
       vue(),
       VitePWA({
