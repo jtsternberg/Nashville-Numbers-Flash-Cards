@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { calculateChord } from '../utils/chordUtils'
 
 const props = defineProps({
@@ -26,72 +26,56 @@ function toggleFlip() {
 
 <template>
    <div
-      class="flashcard"
+      class="w-72 h-96 perspective-1000 mx-auto cursor-pointer select-none"
       :class="{ 'is-flipped': isFlipped }"
       @click="toggleFlip"
+      role="button"
+      tabindex="0"
+      :aria-label="`Flashcard showing ${isFlipped ? chord : number.number}. Click to ${isFlipped ? 'show number' : 'show chord'}`"
+      @keydown.space.prevent="toggleFlip"
    >
-      <div class="flashcard-inner">
-         <div class="flashcard-front">
-            <div class="number">{{ number.number }}</div>
+      <div class="relative w-full h-full transition-transform duration-600 transform-style-preserve-3d">
+         <div
+            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg"
+            :class="{ 'backface-hidden': true }"
+            aria-hidden="isFlipped"
+         >
+            <div class="text-6xl font-bold text-indigo-600">{{ number.number }}</div>
          </div>
-         <div class="flashcard-back">
-            <div class="chord">{{ chord }}</div>
+         <div
+            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg transform rotate-y-180"
+            :class="{ 'backface-hidden': true }"
+            aria-hidden="!isFlipped"
+         >
+            <div class="text-5xl font-bold text-gray-700">{{ chord }}</div>
          </div>
       </div>
    </div>
 </template>
 
-<style scoped>
-.flashcard {
-   width: 280px;
-   height: 400px;
+<style>
+.perspective-1000 {
    perspective: 1000px;
-   margin: 0 auto;
-   cursor: pointer;
 }
 
-.flashcard-inner {
-   position: relative;
-   width: 100%;
-   height: 100%;
-   text-align: center;
-   transition: transform 0.6s;
+.transform-style-preserve-3d {
    transform-style: preserve-3d;
-   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-   border-radius: 10px;
 }
 
-.flashcard.is-flipped .flashcard-inner {
-   transform: rotateY(180deg);
-}
-
-.flashcard-front, .flashcard-back {
-   position: absolute;
-   width: 100%;
-   height: 100%;
+.backface-hidden {
    backface-visibility: hidden;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   border-radius: 10px;
-   background: white;
 }
 
-.flashcard-back {
+.rotate-y-180 {
    transform: rotateY(180deg);
 }
 
-.number, .chord {
-   font-size: 4rem;
-   font-weight: bold;
+.is-flipped .transform-style-preserve-3d {
+   transform: rotateY(180deg);
 }
 
-/* Optional: Add different colors for front/back */
-.flashcard-front {
-   background-color: #f8f9fa;
-}
-
-.flashcard-back {
-   background-color: #e9ecef;
+/* Focus styles */
+.focus:outline-none:focus-visible {
+   @apply ring-2 ring-indigo-500 ring-offset-2;
 }
 </style>

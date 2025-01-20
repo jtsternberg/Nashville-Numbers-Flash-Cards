@@ -1,13 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, provide } from 'vue'
 import data from './data/nashville-numbers.json'
 import FlashCard from './components/FlashCard.vue'
 import KeySelector from './components/KeySelector.vue'
 import ViewToggle from './components/ViewToggle.vue'
+import { useKeyboardNav } from './composables/useKeyboardNav'
 
 const currentKey = ref('C')
 const currentNumber = ref(0)
 const isCheatSheetMode = ref(false)
+const flashCardRef = ref(null)
 
 const totalNumbers = data.numbers.length
 
@@ -30,6 +32,16 @@ function setKey(key) {
 function toggleView() {
    isCheatSheetMode.value = !isCheatSheetMode.value
 }
+
+useKeyboardNav({
+   toggleFlip: () => {
+      if (!isCheatSheetMode.value) {
+         flashCardRef.value?.toggleFlip()
+      }
+   },
+   previous: previousCard,
+   next: nextCard
+})
 </script>
 
 <template>
@@ -57,6 +69,7 @@ function toggleView() {
          <FlashCard
             :number="data.numbers[currentNumber]"
             :current-key="currentKey"
+            ref="flashCardRef"
          />
 
          <div class="progress">
