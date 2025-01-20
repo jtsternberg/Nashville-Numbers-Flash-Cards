@@ -148,7 +148,7 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
 <template>
    <div class="app relative">
       <!-- Progress Header -->
-      <div class="mb-8">
+      <div class="mb-2">
          <div class="flex items-center justify-between mb-2">
             <h1 class="text-xl font-semibold text-white">Nashville Numbers</h1>
             <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
@@ -195,34 +195,35 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
          />
       </div>
       <div v-else class="flashcard-view">
-         <div class="current-key">Key of {{ currentKey }}</div>
+         <div class="text-center my-2 text-white text-2xl current-key">Key of {{ currentKey }}</div>
 
-         <FlashCard
-            :number="filteredNumbers[currentNumber]"
-            :current-key="currentKey"
-            :card-classes="cardClasses"
-            ref="flashCardRef"
-            @next="nextCard"
-            @previous="previousCard"
-         />
-
-         <div class="progress">
-            {{ currentKey }}, {{ currentNumber + 1 }}/{{ totalNumbers }}
-         </div>
-
-         <div class="controls">
+         <div class="relative flex items-center justify-center gap-4 px-4">
             <button
                class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
                @click="previousCard"
             >
                <span class="material-icons">arrow_back</span>
             </button>
+
+            <FlashCard
+               :number="filteredNumbers[currentNumber]"
+               :current-key="currentKey"
+               :card-classes="cardClasses"
+               ref="flashCardRef"
+               @next="nextCard"
+               @previous="previousCard"
+            />
+
             <button
                class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
                @click="nextCard"
             >
                <span class="material-icons">arrow_forward</span>
             </button>
+         </div>
+
+         <div class="progress mt-4 text-white text-center">
+            {{ currentKey }}, {{ currentNumber + 1 }}/{{ totalNumbers }}
          </div>
       </div>
 
@@ -256,7 +257,7 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
 
 /* Add the wave background */
 body {
-   background: linear-gradient(135deg, #7c3aed, #9333ea);
+   background: linear-gradient(135deg, #9157f5, #412360);
    position: relative;
    overflow-x: hidden;
    height: 100vh;
@@ -274,18 +275,7 @@ body::after {
    background-repeat: no-repeat;
    background-size: 100% 100%;
    transform-origin: top center;
-   /* animation: wave 2s infinite linear; */
-}
-
-body::before {
-   /* background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); */
-
-   /* animation-delay: -3s; */
-}
-
-body::after {
-   /* background: linear-gradient(45deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); */
-
+   animation: wave 2s infinite linear;
 }
 
 @keyframes wave {
@@ -294,23 +284,4 @@ body::after {
    }
 }
 
-.current-key {
-   text-align: center;
-   font-size: 1.5rem;
-   margin: 1rem 0;
-   color: white;
-}
-
-.controls {
-   display: flex;
-   justify-content: center;
-   gap: 1rem;
-   margin-top: 1rem;
-}
-
-.progress {
-   text-align: center;
-   margin-top: 1rem;
-   color: white;
-}
 </style>

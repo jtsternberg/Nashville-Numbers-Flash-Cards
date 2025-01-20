@@ -34,7 +34,7 @@ defineExpose({ toggleFlip })
 
 <template>
    <div
-      class="w-full max-w-md aspect-[3/4] perspective-1000 mx-auto cursor-pointer select-none"
+      class="w-full max-w-sm aspect-[1/1] perspective-1000 mx-auto cursor-pointer select-none"
       :class="[
          { 'is-flipped': isFlipped },
          cardClasses
@@ -46,14 +46,14 @@ defineExpose({ toggleFlip })
             class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-300 text-purple-900 shadow-xl backface-hidden"
             aria-hidden="isFlipped"
          >
-            <div class="text-7xl font-bold mb-4">{{ number.number }}</div>
+            <div class="text-6xl font-bold">{{ number.number }}</div>
          </div>
          <div
             class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-100 shadow-xl backface-hidden rotate-y-180"
             aria-hidden="!isFlipped"
          >
-            <div class="text-7xl font-bold text-purple-600 mb-4">{{ chord }}</div>
-            <div class="text-lg text-gray-500">{{ number.quality }}</div>
+            <div class="text-6xl font-bold text-purple-600 mb-2">{{ chord }}</div>
+            <div class="text-base text-gray-500">{{ number.quality }}</div>
          </div>
       </div>
    </div>

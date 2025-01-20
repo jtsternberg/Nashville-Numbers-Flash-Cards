@@ -36,7 +36,7 @@ defineExpose({ scrollToKey })
 </script>
 
 <template>
-   <div class="overflow-x-auto pb-4 hide-scrollbar">
+   <div class="overflow-x-auto py-4 hide-scrollbar">
       <div class="flex gap-2 px-4">
          <div
             v-for="key in keys"
