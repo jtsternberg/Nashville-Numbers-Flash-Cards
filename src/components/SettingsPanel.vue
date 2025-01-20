@@ -13,7 +13,7 @@ function toggle() {
 <template>
    <div class="fixed top-4 right-4 z-50">
       <button
-         class="btn bg-gray-100 hover:bg-gray-200"
+         class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-purple-900 flex items-center justify-center transition-colors"
          @click="toggle"
       >
          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,15 +24,15 @@ function toggle() {
 
       <div
          v-if="isOpen"
-         class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg p-4"
+         class="absolute right-0 mt-2 w-64 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 text-purple-900 border border-white/20"
       >
-         <h3 class="text-lg font-semibold mb-4">Settings</h3>
+         <h3 class="text-lg font-semibold mb-4 text-purple-900/90">Settings</h3>
 
          <div class="flex items-center justify-between">
-            <label class="text-sm text-gray-600">Show Advanced Chords</label>
+            <label class="text-sm text-purple-900/80">Show Advanced Chords</label>
             <button
                class="relative inline-flex items-center h-6 rounded-full w-11"
-               :class="settings.showAdvancedChords ? 'bg-indigo-600' : 'bg-gray-200'"
+               :class="settings.showAdvancedChords ? 'bg-purple-500' : 'bg-white/20'"
                @click="settings.showAdvancedChords = !settings.showAdvancedChords"
             >
                <span
@@ -43,10 +43,10 @@ function toggle() {
          </div>
 
          <div class="flex items-center justify-between pt-3">
-            <label class="text-sm text-gray-600">Hide Sharps and Flats</label>
+            <label class="text-sm text-purple-900/80">Hide Sharps and Flats</label>
             <button
                class="relative inline-flex items-center h-6 rounded-full w-11"
-               :class="settings.hideSharpsAndFlats ? 'bg-indigo-600' : 'bg-gray-200'"
+               :class="settings.hideSharpsAndFlats ? 'bg-purple-500' : 'bg-white/20'"
                @click="settings.hideSharpsAndFlats = !settings.hideSharpsAndFlats"
             >
                <span class="inline-block w-4 h-4 transform transition-transform bg-white rounded-full" :class="settings.hideSharpsAndFlats ? 'translate-x-6' : 'translate-x-1'" />

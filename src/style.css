@@ -9,7 +9,7 @@
    }
 
    .btn-primary {
-      @apply bg-purple-600 text-white hover:bg-purple-700
+      @apply bg-purple-800 text-white hover:bg-purple-700
              focus:ring-purple-500;
    }
 

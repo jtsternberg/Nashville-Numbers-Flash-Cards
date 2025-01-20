@@ -33,29 +33,26 @@ defineExpose({ toggleFlip })
 
 <template>
    <div
-      class="w-72 h-96 perspective-1000 mx-auto cursor-pointer select-none transition-all duration-300"
+      class="w-full max-w-md aspect-[3/4] perspective-1000 mx-auto cursor-pointer select-none"
       :class="[
          { 'is-flipped': isFlipped },
          cardClasses
       ]"
       @click="toggleFlip"
-      role="button"
-      tabindex="0"
-      :aria-label="`Flashcard showing ${isFlipped ? chord : number.number}. Click to ${isFlipped ? 'show number' : 'show chord'}`"
-      @keydown.space.prevent="toggleFlip"
    >
       <div class="relative w-full h-full transition-transform duration-600 transform-style-preserve-3d">
          <div
-            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg backface-hidden"
+            class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-300 text-purple-900 shadow-xl backface-hidden"
             aria-hidden="isFlipped"
          >
-            <div class="text-6xl font-bold text-indigo-600">{{ chord }}</div>
+            <div class="text-7xl font-bold mb-4">{{ number.number }}</div>
          </div>
          <div
-            class="absolute w-full h-full flex items-center justify-center rounded-xl bg-white shadow-lg backface-hidden rotate-y-180"
+            class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-100 shadow-xl backface-hidden rotate-y-180"
             aria-hidden="!isFlipped"
          >
-            <div class="text-5xl font-bold text-gray-700">{{ number.number }}</div>
+            <div class="text-7xl font-bold text-purple-600 mb-4">{{ chord }}</div>
+            <div class="text-lg text-gray-500">{{ number.quality }}</div>
          </div>
       </div>
    </div>
@@ -85,6 +82,6 @@ defineExpose({ toggleFlip })
 
 /* Focus styles */
 .focus:outline-none:focus-visible {
-   @apply ring-2 ring-indigo-500 ring-offset-2;
+   @apply ring-2 ring-purple-500 ring-offset-2;
 }
 </style>

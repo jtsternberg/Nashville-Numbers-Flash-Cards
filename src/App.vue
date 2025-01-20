@@ -78,7 +78,39 @@ const cardClasses = computed(() => ({
 <template>
    <div class="app relative">
       <SettingsPanel />
-      <div class="current-key text-center text-xl font-semibold mb-4">Key of {{ currentKey }}</div>
+      <!-- Progress Header -->
+      <div class="mb-8">
+         <div class="flex items-center justify-between mb-2">
+            <h1 class="text-xl font-semibold text-white">Nashville Numbers</h1>
+            <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+               <span class="text-sm text-white">{{ totalNumbers }}</span>
+            </div>
+         </div>
+
+         <!-- Progress Indicators -->
+         <div class="flex justify-between items-center text-white/80 text-sm mb-4">
+            <div class="text-center">
+               <div>Learning</div>
+               <div class="text-xl font-bold">{{ currentNumber + 1 }}</div>
+            </div>
+            <div class="text-center opacity-50">
+               <div>Reviewing</div>
+               <div class="text-xl font-bold">0</div>
+            </div>
+            <div class="text-center opacity-50">
+               <div>Mastered</div>
+               <div class="text-xl font-bold">0</div>
+            </div>
+         </div>
+
+         <!-- Progress Bar -->
+         <div class="h-1 bg-white/20 rounded-full overflow-hidden">
+            <div
+               class="h-full bg-white transition-all duration-300"
+               :style="{ width: `${((currentNumber + 1) / totalNumbers) * 100}%` }"
+            ></div>
+         </div>
+      </div>
       <KeySelector
          :keys="hideSharpsAndFlats ? data.keysNoSharpsAndFlats : data.keys"
          :current-key="currentKey"
@@ -111,8 +143,18 @@ const cardClasses = computed(() => ({
          </div>
 
          <div class="controls">
-            <button class="btn btn-outline text-purple bg-purple-100" @click="previousCard">Previous</button>
-            <button class="btn btn-outline text-purple bg-purple-100" @click="nextCard">Next</button>
+            <button
+               class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+               @click="previousCard"
+            >
+               <span class="material-icons">arrow_back</span>
+            </button>
+            <button
+               class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+               @click="nextCard"
+            >
+               <span class="material-icons">arrow_forward</span>
+            </button>
          </div>
       </div>
    </div>
@@ -129,7 +171,7 @@ const cardClasses = computed(() => ({
 
 /* Add the wave background */
 body {
-   background: linear-gradient(45deg, #6366f1, #8b5cf6);
+   background: linear-gradient(135deg, #7c3aed, #9333ea);
    position: relative;
    overflow-x: hidden;
    height: 100vh;
