@@ -4,6 +4,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
    base: '/nashville-numbers/',
+   build: {
+      outDir: 'nashville-numbers',
+      emptyOutDir: true
+   },
    plugins: [
       vue(),
       VitePWA({
@@ -32,6 +36,11 @@ export default defineConfig({
                   purpose: 'any maskable'
                }
             ]
+         },
+         workbox: {
+            cleanupOutdatedCaches: true,
+            clientsClaim: true,
+            skipWaiting: true
          }
       })
    ]
