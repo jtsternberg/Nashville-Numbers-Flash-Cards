@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { calculateChord } from '../utils/chordUtils'
+import { useChordStore } from '../stores/chords'
 
 const props = defineProps({
    number: {
@@ -18,9 +18,10 @@ const props = defineProps({
 })
 
 const isFlipped = ref(false)
+const chordStore = useChordStore()
 
 const chord = computed(() =>
-   calculateChord(props.currentKey, props.number.number, props.number.quality)
+   chordStore.calculateChord(props.currentKey, props.number.number, props.number.quality)
 )
 
 function toggleFlip() {

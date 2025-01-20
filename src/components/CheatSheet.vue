@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import { calculateChord } from '../utils/chordUtils'
 import { useSettingsStore } from '../stores/settings'
+import { useChordStore } from '../stores/chords'
 
 const props = defineProps({
    currentKey: {
@@ -17,6 +17,7 @@ const props = defineProps({
 const emit = defineEmits(['select-number'])
 
 const settings = useSettingsStore()
+const chordStore = useChordStore()
 
 // Split numbers into basic and advanced
 const basicNumbers = computed(() =>
@@ -27,23 +28,26 @@ const advancedNumbers = computed(() =>
    props.numbers.filter(n => n.isException)
 )
 
-const chords = computed(() =>
+const diatonicChords = computed(() =>
    basicNumbers.value.map(num => ({
       ...num,
-      chord: calculateChord(props.currentKey, num.number, num.quality)
+      chord: chordStore.calculateChord(props.currentKey, num.number, num.quality)
    }))
 )
 
-const advancedChords = computed(() => {
-   console.log(advancedNumbers.value.map(num => ({
+const advancedChords = computed(() =>
+   advancedNumbers.value.map(num => ({
       ...num,
-      chord: calculateChord(props.currentKey, num.number, num.quality) || '',
-   })))
-   return advancedNumbers.value.map(num => ({
-      ...num,
-      chord: calculateChord(props.currentKey, num.number, num.quality) || '',
+      chord: chordStore.calculateChord(props.currentKey, num.number, num.quality) || ''
    }))
-})
+)
+
+const allChords = computed(() =>
+   props.numbers.map(num => ({
+      ...num,
+      chord: chordStore.calculateChord(props.currentKey, num.number, num.quality) || ''
+   }))
+)
 </script>
 
 <template>
@@ -53,7 +57,7 @@ const advancedChords = computed(() => {
          <h2 class="text-xl font-semibold text-gray-100">Most Common Chord Types</h2>
          <div class="flex flex-wrap gap-4">
             <div
-               v-for="item in chords"
+               v-for="item in diatonicChords"
                :key="item.number"
                class="bg-white rounded-lg shadow p-4 text-center w-24 h-36 cursor-pointer hover:scale-105 transition-transform"
                @click="emit('select-number', item)"
