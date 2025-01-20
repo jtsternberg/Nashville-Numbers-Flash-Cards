@@ -1,7 +1,8 @@
 <script setup>
 import KeyCard from './KeyCard.vue'
+import { ref, onMounted } from 'vue'
 
-defineProps({
+const props = defineProps({
    keys: {
       type: Array,
       required: true
@@ -13,30 +14,54 @@ defineProps({
 })
 
 const emit = defineEmits(['select-key'])
+
+const keyRefs = ref({})
+
+function scrollToKey(key) {
+   const element = keyRefs.value[key]
+   if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+   }
+}
+
+// Scroll to initial key on mount
+onMounted(() => {
+   // Use a small delay to ensure the DOM is fully rendered
+   setTimeout(() => {
+      scrollToKey(props.currentKey)
+   }, 100)
+})
+
+defineExpose({ scrollToKey })
 </script>
 
 <template>
-   <div class="flex overflow-x-auto overflow-y-visible gap-1 py-8 px-4 min-h-[12rem]">
-      <KeyCard
-         v-for="key in keys"
-         :key="key"
-         :model-value="key"
-         :is-selected="currentKey === key"
-         @update:model-value="$emit('select-key', key)"
-         @select="$emit('select-key', key)"
-      />
+   <div class="overflow-x-auto pb-4 hide-scrollbar">
+      <div class="flex gap-2 px-4">
+         <div
+            v-for="key in keys"
+            :key="key"
+            :ref="el => keyRefs[key] = el"
+            class="key-card flex-shrink-0 w-16 h-16 rounded-xl flex items-center justify-center text-lg font-semibold cursor-pointer transition-all duration-300"
+            :class="[
+               currentKey === key
+                  ? 'bg-white text-purple-600 shadow-lg scale-110'
+                  : 'bg-white/10 text-white hover:bg-white/20'
+            ]"
+            @click="$emit('select-key', key)"
+         >
+            {{ key }}
+         </div>
+      </div>
    </div>
 </template>
 
 <style scoped>
-.flex {
-   -webkit-overflow-scrolling: touch;
-   scrollbar-width: none; /* Firefox */
-   position: relative;
-   z-index: 0;
+.hide-scrollbar {
+   -ms-overflow-style: none;
+   scrollbar-width: none;
 }
-
-.flex::-webkit-scrollbar {
-   display: none; /* Chrome, Safari */
+.hide-scrollbar::-webkit-scrollbar {
+   display: none;
 }
 </style>

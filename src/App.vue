@@ -17,6 +17,7 @@ const currentKey = computed({
 const currentNumber = ref(0)
 const isCheatSheetMode = ref(false)
 const flashCardRef = ref(null)
+const keySelectorRef = ref(null)
 const isKeyChanging = ref(false)
 
 
@@ -32,12 +33,41 @@ const totalNumbers = computed(() => filteredNumbers.value.length)
 function nextCard() {
    if (currentNumber.value < totalNumbers.value - 1) {
       currentNumber.value++
+   } else {
+      // Get the current key index
+      const keyList = showSharpsAndFlats.value ? data.keys : data.keysNoSharpsAndFlats
+      const currentKeyIndex = keyList.indexOf(currentKey.value)
+
+      // Move to the next key if not at the last key
+      if (currentKeyIndex < keyList.length - 1) {
+         const nextKey = keyList[currentKeyIndex + 1]
+         setKey(nextKey)
+      } else {
+         // Optionally wrap around to the first key
+         setKey(keyList[0])
+      }
    }
 }
 
 function previousCard() {
    if (currentNumber.value > 0) {
       currentNumber.value--
+   } else {
+      // Get the current key index
+      const keyList = showSharpsAndFlats.value ? data.keys : data.keysNoSharpsAndFlats
+      const currentKeyIndex = keyList.indexOf(currentKey.value)
+
+      // Move to the previous key if not at the first key
+      if (currentKeyIndex > 0) {
+         const prevKey = keyList[currentKeyIndex - 1]
+         setKey(prevKey)
+         // Set to last card of the previous key
+         currentNumber.value = totalNumbers.value - 1
+      } else {
+         // Optionally wrap around to the last key
+         setKey(keyList[keyList.length - 1])
+         currentNumber.value = totalNumbers.value - 1
+      }
    }
 }
 
@@ -47,6 +77,11 @@ function setKey(key) {
    isKeyChanging.value = true
    currentKey.value = key
    currentNumber.value = 0
+
+   // Scroll the key selector to the new key
+   nextTick(() => {
+      keySelectorRef.value?.scrollToKey(key)
+   })
 
    // Reset the changing state after animation completes
    setTimeout(() => {
@@ -146,6 +181,7 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
          </div>
       </div>
       <KeySelector
+         ref="keySelectorRef"
          :keys="showSharpsAndFlats ? data.keys : data.keysNoSharpsAndFlats"
          :current-key="currentKey"
          @select-key="setKey"
@@ -166,6 +202,8 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
             :current-key="currentKey"
             :card-classes="cardClasses"
             ref="flashCardRef"
+            @next="nextCard"
+            @previous="previousCard"
          />
 
          <div class="progress">
