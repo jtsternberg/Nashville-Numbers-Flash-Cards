@@ -97,6 +97,13 @@ async function handleRefresh() {
                   <span class="text-sm text-purple-900/70">{{ lastUpdated }}</span>
                </div>
 
+               <div class="flex justify-between items-center">
+                  <span class="text-sm font-medium">Created By</span>
+                  <span class="text-sm text-purple-900/70">
+                     <a href="mailto:me@jtsternberg.com?subject=Nashville%20Numbers%20App%20Inquiry">Justin Sternberg</a>
+                  </span>
+               </div>
+
                <button
                   @click="handleRefresh"
                   class="w-full mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center justify-center gap-2"

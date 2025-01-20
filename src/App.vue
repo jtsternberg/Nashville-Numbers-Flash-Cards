@@ -150,13 +150,13 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
    <div class="app relative">
       <!-- Progress Header -->
       <div class="mb-2">
-         <div class="flex items-center justify-between mb-2">
+         <div class="flex items-center justify-between mb-6">
             <h1 class="text-xl font-semibold text-white">Nashville Numbers</h1>
             <InfoPanel />
          </div>
 
          <!-- Progress Indicators -->
-         <div class="flex justify-between items-center text-white/80 text-sm mb-4">
+         <!-- <div class="flex justify-between items-center text-white/80 text-sm mb-4">
             <div class="text-center">
                <div>Learning</div>
                <div class="text-xl font-bold">{{ currentNumber + 1 }}</div>
@@ -169,10 +169,10 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
                <div>Mastered</div>
                <div class="text-xl font-bold">0</div>
             </div>
-         </div>
+         </div> -->
 
          <!-- Progress Bar -->
-         <div class="h-1 bg-white/20 rounded-full overflow-hidden">
+         <div class="h-1 bg-white/20 rounded-full overflow-hidden mb-4">
             <div
                class="h-full bg-white transition-all duration-300"
                :style="{ width: `${((currentNumber + 1) / totalNumbers) * 100}%` }"

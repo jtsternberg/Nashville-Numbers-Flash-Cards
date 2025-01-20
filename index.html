@@ -3,12 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Nashville Number System</title>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script>
+      // Handle script loading errors and refresh if needed
+      async function handleRefresh() {
+        try {
+          // Check reload attempts
+          const MAX_RELOADS = 3;
+          const reloadCount = parseInt(localStorage.getItem('reloadCount') || '0');
+          const lastReloadTime = parseInt(localStorage.getItem('lastReloadTime') || '0');
+          const now = Date.now();
+
+          // Reset counter if last reload was more than 1 minute ago
+          if (now - lastReloadTime > 60000) {
+            localStorage.setItem('reloadCount', '0');
+            localStorage.setItem('lastReloadTime', now.toString());
+          } else if (reloadCount >= MAX_RELOADS) {
+            console.error('Maximum reload attempts reached. Please try again later.');
+            return;
+          }
+
+          if ('serviceWorker' in navigator) {
+            const registrations = await navigator.serviceWorker.getRegistrations();
+            await Promise.all(registrations.map(reg => reg.unregister()));
+
+            const cacheKeys = await caches.keys();
+            await Promise.all(cacheKeys.map(key => caches.delete(key)));
+          }
+
+          // Increment reload counter
+          localStorage.setItem('reloadCount', (reloadCount + 1).toString());
+          localStorage.setItem('lastReloadTime', now.toString());
+
+          const url = new URL(window.location.href);
+          url.searchParams.set('t', now);
+          window.location.href = url.toString();
+        } catch (error) {
+          console.error('Error refreshing app:', error);
+        }
+      }
+
+      window.addEventListener('error', function(event) {
+        if (event.target.tagName === 'SCRIPT') {
+          handleRefresh();
+        }
+      }, true);
+
+      // Reset reload counter when page loads successfully
+      window.addEventListener('load', function() {
+        localStorage.setItem('reloadCount', '0');
+        localStorage.setItem('lastReloadTime', '0');
+      });
+    </script>
+    <script type="module" src="/src/main.js" onerror="handleRefresh()"></script>
   </body>
 </html>

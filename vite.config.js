@@ -18,7 +18,7 @@ export default defineConfig({
          includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
          manifest: {
             name: 'Nashville Number System',
-            short_name: 'NNS Cards',
+            short_name: 'Nashville Numbers',
             description: 'Nashville Number System Flash Cards',
             theme_color: '#ffffff',
             icons: [

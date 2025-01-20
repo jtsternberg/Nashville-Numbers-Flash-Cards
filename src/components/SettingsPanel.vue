@@ -12,7 +12,7 @@ function toggle() {
 </script>
 
 <template>
-   <div class="fixed top-4 right-4 z-50">
+   <div class="">
       <button
          class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
          @click="toggle"
@@ -30,7 +30,7 @@ function toggle() {
       >
          <div
             v-if="isOpen"
-            class="absolute right-0 bottom-11 mb-2 w-64 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 text-purple-900 border border-white/20"
+            class="absolute right-3 bottom-16 mb-2 w-64 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 text-purple-900 border border-white/20"
          >
             <h3 class="text-lg font-semibold mb-4 text-purple-900/90">Settings</h3>
 
