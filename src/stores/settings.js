@@ -6,7 +6,7 @@ const STORAGE_KEY = 'nns-settings'
 // Default settings
 const DEFAULT_SETTINGS = {
    showAdvancedChords: false,
-   hideSharpsAndFlats: true,
+   showSharpsAndFlats: false,
    currentKey: 'C'
 }
 
@@ -26,15 +26,15 @@ function loadSettings() {
 export const useSettingsStore = defineStore('settings', () => {
    const settings = loadSettings()
    const showAdvancedChords = ref(settings.showAdvancedChords)
-   const hideSharpsAndFlats = ref(settings.hideSharpsAndFlats)
+   const showSharpsAndFlats = ref(settings.showSharpsAndFlats)
    const currentKey = ref(settings.currentKey)
 
    // Watch for changes and save to localStorage
-   watch([showAdvancedChords, hideSharpsAndFlats, currentKey], () => {
+   watch([showAdvancedChords, showSharpsAndFlats, currentKey], () => {
       try {
          localStorage.setItem(STORAGE_KEY, JSON.stringify({
             showAdvancedChords: showAdvancedChords.value,
-            hideSharpsAndFlats: hideSharpsAndFlats.value,
+            showSharpsAndFlats: showSharpsAndFlats.value,
             currentKey: currentKey.value
          }))
       } catch (e) {
@@ -44,7 +44,7 @@ export const useSettingsStore = defineStore('settings', () => {
 
    return {
       showAdvancedChords,
-      hideSharpsAndFlats,
+      showSharpsAndFlats,
       currentKey
    }
 })

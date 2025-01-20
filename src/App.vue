@@ -20,7 +20,7 @@ const flashCardRef = ref(null)
 const isKeyChanging = ref(false)
 
 
-const hideSharpsAndFlats = computed(() => settings.hideSharpsAndFlats)
+const showSharpsAndFlats = computed(() => settings.showSharpsAndFlats)
 
 // Filter numbers based on settings
 const filteredNumbers = computed(() => {
@@ -103,8 +103,8 @@ watch(() => settings.showAdvancedChords, (newVal) => {
       currentNumber.value = 0
    }
 })
-watch(() => settings.hideSharpsAndFlats, (newVal) => {
-   if (newVal) {
+watch(() => settings.showSharpsAndFlats, (newVal) => {
+   if (!newVal) {
       setKey(data.keysNoSharpsAndFlats[0])
    }
 })
@@ -112,7 +112,6 @@ watch(() => settings.hideSharpsAndFlats, (newVal) => {
 
 <template>
    <div class="app relative">
-      <SettingsPanel />
       <!-- Progress Header -->
       <div class="mb-8">
          <div class="flex items-center justify-between mb-2">
@@ -147,14 +146,9 @@ watch(() => settings.hideSharpsAndFlats, (newVal) => {
          </div>
       </div>
       <KeySelector
-         :keys="hideSharpsAndFlats ? data.keysNoSharpsAndFlats : data.keys"
+         :keys="showSharpsAndFlats ? data.keys : data.keysNoSharpsAndFlats"
          :current-key="currentKey"
          @select-key="setKey"
-      />
-
-      <ViewToggle
-         :is-cheat-sheet="isCheatSheetMode"
-         @toggle="toggleView"
       />
 
       <div v-if="isCheatSheetMode">
@@ -193,13 +187,30 @@ watch(() => settings.hideSharpsAndFlats, (newVal) => {
             </button>
          </div>
       </div>
+
+      <!-- Footer Navigation -->
+      <div class="fixed bottom-0 left-0 right-0 p-4 flex justify-center items-center gap-4 bg-white/10 backdrop-blur-sm border-t border-white/20">
+         <div class="max-w-2xl w-full flex justify-between items-center">
+            <button
+               class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+               @click="toggleView"
+            >
+               <span class="material-icons">{{ isCheatSheetMode ? 'school' : 'grid_view' }}</span>
+            </button>
+
+            <SettingsPanel />
+         </div>
+      </div>
+
+      <!-- Add padding to prevent content from being hidden behind footer -->
+      <div class="h-20"></div>
    </div>
 </template>
 
 <style>
 .app {
    padding: 1rem;
-   max-width: 600px;
+   max-width: 2xl;
    margin: 0 auto;
    position: relative;
    z-index: 1;
