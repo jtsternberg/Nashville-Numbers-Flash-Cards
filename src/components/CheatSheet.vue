@@ -14,6 +14,8 @@ const props = defineProps({
    }
 })
 
+const emit = defineEmits(['select-number'])
+
 const settings = useSettingsStore()
 
 // Split numbers into basic and advanced
@@ -53,7 +55,8 @@ const advancedChords = computed(() => {
             <div
                v-for="item in chords"
                :key="item.number"
-               class="bg-white rounded-lg shadow p-4 text-center w-24 h-36"
+               class="bg-white rounded-lg shadow p-4 text-center w-24 h-36 cursor-pointer hover:scale-105 transition-transform"
+               @click="emit('select-number', item)"
             >
                <div class="text-2xl font-bold text-purple-600">{{ item.number }}</div>
                <div v-show="item.chord" class="text-lg text-gray-600">{{ item.chord }}</div>
@@ -69,7 +72,8 @@ const advancedChords = computed(() => {
             <div
                v-for="item in advancedChords"
                :key="item.number"
-               class="bg-white rounded-lg shadow p-4 text-center"
+               class="bg-white rounded-lg shadow p-4 text-center w-24 h-36 cursor-pointer hover:scale-105 transition-transform"
+               @click="emit('select-number', item)"
             >
                <div class="text-2xl font-bold text-purple-600">{{ item.number }}</div>
                <div v-show="item.chord" class="text-lg text-gray-600">{{ item.chord }}</div>

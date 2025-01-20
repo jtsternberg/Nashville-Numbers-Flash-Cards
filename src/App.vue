@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed, watch } from 'vue'
+import { ref, provide, computed, watch, nextTick } from 'vue'
 import data from './data/nashville-numbers.json'
 import FlashCard from './components/FlashCard.vue'
 import KeySelector from './components/KeySelector.vue'
@@ -23,9 +23,9 @@ const isKeyChanging = ref(false)
 const hideSharpsAndFlats = computed(() => settings.hideSharpsAndFlats)
 
 // Filter numbers based on settings
-const filteredNumbers = computed(() =>
-   data.numbers.filter(n => settings.showAdvancedChords || !n.isException)
-)
+const filteredNumbers = computed(() => {
+   return data.numbers.filter(n => settings.showAdvancedChords || !n.isException)
+})
 
 const totalNumbers = computed(() => filteredNumbers.value.length)
 
@@ -73,6 +73,41 @@ const cardClasses = computed(() => ({
    'transition-transform duration-300': isKeyChanging.value,
    'scale-0': isKeyChanging.value,
 }))
+
+const selectCard = (number) => {
+   try {
+      // First ensure the advanced chords are shown if needed
+      if (number.isException && !settings.showAdvancedChords) {
+         settings.showAdvancedChords = true
+         // Wait for the settings change to propagate
+         return;
+      }
+
+      // Make sure filteredNumbers is available
+      if (!filteredNumbers.value) {
+         return;
+      }
+
+      const index = filteredNumbers.value.findIndex(n => n.number === number.number)
+      if (index !== -1) {
+         currentNumber.value = index
+         isCheatSheetMode.value = false
+      }
+   } catch (error) {
+      console.error('Error switching to flashcard:', error)
+   }
+};
+
+watch(() => settings.showAdvancedChords, (newVal) => {
+   if (!newVal) {
+      currentNumber.value = 0
+   }
+})
+watch(() => settings.hideSharpsAndFlats, (newVal) => {
+   if (newVal) {
+      setKey(data.keysNoSharpsAndFlats[0])
+   }
+})
 </script>
 
 <template>
@@ -126,6 +161,7 @@ const cardClasses = computed(() => ({
          <CheatSheet
             :current-key="currentKey"
             :numbers="data.numbers"
+            @select-number="selectCard"
          />
       </div>
       <div v-else class="flashcard-view">
