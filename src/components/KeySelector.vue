@@ -19,8 +19,8 @@ const keyRefs = ref({})
 
 function scrollToKey(key) {
    const element = keyRefs.value[key]
-   if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+   if (element?.$el) {
+      element.$el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
    }
 }
 
@@ -38,7 +38,7 @@ defineExpose({ scrollToKey })
 <template>
    <div class="overflow-x-auto py-4 hide-scrollbar">
       <div class="flex gap-2 px-4">
-         <div
+         <!-- <div
             v-for="key in keys"
             :key="key"
             :ref="el => keyRefs[key] = el"
@@ -51,7 +51,16 @@ defineExpose({ scrollToKey })
             @click="$emit('select-key', key)"
          >
             {{ key }}
-         </div>
+         </div> -->
+
+         <KeyCard
+            v-for="key in keys"
+            :key="key"
+            :ref="el => keyRefs[key] = el"
+            :model-value="key"
+            :is-selected="currentKey === key"
+            @select="() => $emit('select-key', key)"
+         />
       </div>
    </div>
 </template>

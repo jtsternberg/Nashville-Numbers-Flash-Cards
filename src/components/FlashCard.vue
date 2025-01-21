@@ -34,12 +34,18 @@ defineExpose({ toggleFlip })
 
 <template>
    <div
-      class="w-full max-w-sm aspect-[3/4] perspective-1000 mx-auto cursor-pointer select-none"
+      class="w-full max-w-sm aspect-[3/4] perspective-1000 mx-auto cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-2xl"
       :class="[
          { 'is-flipped': isFlipped },
          cardClasses
       ]"
       @click="toggleFlip"
+      @keydown.enter="toggleFlip"
+      @keydown.space.prevent="toggleFlip"
+      tabindex="0"
+      role="button"
+      :aria-label="`Flashcard for number ${number.number}. Press Enter or Space to flip.`"
+      :aria-pressed="isFlipped"
    >
       <div class="relative w-full h-full transition-transform duration-600 transform-style-preserve-3d">
          <div

@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useChordStore } from '../stores/chords'
+
 const model = defineModel({
    type: String,
    required: true
@@ -13,10 +15,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['select'])
+const chordStore = useChordStore()
 
 // Animation states
 const isMovingToFront = ref(false)
 const isSpread = ref(false)
+
+const icon = computed(() => chordStore.getKeyIcon(model.value))
 
 function handleClick() {
    if (!props.isSelected) {
@@ -31,8 +36,14 @@ function handleClick() {
 
 <template>
    <div
-      class="relative cursor-pointer transition-all duration-300 shrink-0"
+      class="relative cursor-pointer transition-all duration-300 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-xl p-1"
       @click="handleClick"
+      @keydown.enter="handleClick"
+      @keydown.space.prevent="handleClick"
+      tabindex="0"
+      role="button"
+      :aria-label="`Select key ${model}`"
+      :aria-pressed="isSelected"
    >
       <!-- Card container -->
       <div
@@ -52,10 +63,19 @@ function handleClick() {
 
             <!-- Center symbol -->
             <div
-               class="absolute inset-0 flex items-center justify-center"
+               class="absolute inset-0 flex items-center justify-center gap-1"
                :class="isSelected ? 'text-purple-200' : 'text-purple-300'"
             >
-               <span class="text-2xl font-bold">{{ model }}</span>
+               <template v-for="(iconItem, index) in icon" :key="iconItem">
+                  <span
+                     class="material-icons"
+                     :class="icon.length > 1 ? 'text-2xl' : 'text-4xl'"
+                  >{{ iconItem }}</span>
+                  <span
+                     v-if="index < icon.length - 1"
+                     class="text-2xl font-light"
+                  >/</span>
+               </template>
             </div>
 
             <!-- Bottom key indicator -->
