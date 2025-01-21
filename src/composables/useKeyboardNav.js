@@ -95,16 +95,16 @@ export function useKeyboardNav(handlers) {
 
    onMounted(() => {
       window.addEventListener('keydown', handleKeydown)
-      window.addEventListener('touchstart', handleTouchStart)
-      window.addEventListener('touchmove', handleTouchMove, { passive: false })
-      window.addEventListener('touchend', handleTouchEnd)
+      document.querySelector('.flashcard-view').addEventListener('touchstart', handleTouchStart)
+      document.querySelector('.flashcard-view').addEventListener('touchmove', handleTouchMove, { passive: false })
+      document.querySelector('.flashcard-view').addEventListener('touchend', handleTouchEnd)
    })
 
    onUnmounted(() => {
       window.removeEventListener('keydown', handleKeydown)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchmove', handleTouchMove)
-      window.removeEventListener('touchend', handleTouchEnd)
+      document.querySelector('.flashcard-view').removeEventListener('touchstart', handleTouchStart)
+      document.querySelector('.flashcard-view').removeEventListener('touchmove', handleTouchMove)
+      document.querySelector('.flashcard-view').removeEventListener('touchend', handleTouchEnd)
    })
 
    return {
