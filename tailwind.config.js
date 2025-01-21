@@ -6,6 +6,10 @@ export default {
    ],
    theme: {
       extend: {
+         screens: {
+            'tall': { 'raw': '(min-height: 880px)' },
+            'short': { 'raw': '(max-height: 880px)' },
+         },
          animation: {
             'flip': 'flip 0.6s ease-in-out',
          },

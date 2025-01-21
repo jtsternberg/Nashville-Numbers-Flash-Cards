@@ -41,7 +41,7 @@ function handleClick() {
    >
       <!-- Card container -->
       <div
-         class="w-24 h-36 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl bg-gradient-to-br from-purple-900 to-purple-950"
+         class="w-20 h-28 tall:w-24 tall:h-36 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl bg-gradient-to-br from-purple-900 to-purple-950"
          :class="[
             isSelected
                ? 'ring-2 ring-purple-400 -translate-y-1 shadow-2xl'
@@ -64,11 +64,11 @@ function handleClick() {
                <template v-for="(iconItem, index) in icon" :key="iconItem">
                   <span
                      class="material-icons"
-                     :class="icon.length > 1 ? 'text-2xl' : 'text-4xl'"
+                     :class="icon.length > 1 ? 'text-lg tall:text-2xl' : 'text-3xl tall:text-4xl'"
                   >{{ iconItem }}</span>
                   <span
                      v-if="index < icon.length - 1"
-                     class="text-2xl font-light"
+                     class="text-xl tall:text-2xl font-light"
                   >/</span>
                </template>
             </div>
