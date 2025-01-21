@@ -34,7 +34,7 @@ defineExpose({ toggleFlip })
 
 <template>
    <div
-      class="w-full max-w-sm aspect-[3/4] short:aspect-[9/10] perspective-1000 mx-auto cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-2xl"
+      class="w-full max-w-sm col-span-2 md:col-span-1 aspect-[3/4] short:aspect-[9/10] perspective-1000 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-2xl order-1 md:order-none mx-auto"
       :class="[
          { 'is-flipped': isFlipped },
          cardClasses

@@ -8,6 +8,8 @@ import SettingsPanel from './components/SettingsPanel.vue'
 import InfoPanel from './components/InfoPanel.vue'
 import { useKeyboardNav } from './composables/useKeyboardNav'
 import { useSettingsStore } from './stores/settings'
+import FlashCardNav from './components/FlashCardNav.vue'
+import FlashCardView from './components/FlashCardView.vue'
 
 const settings = useSettingsStore()
 const currentKey = computed({
@@ -199,38 +201,16 @@ watch(() => currentKey.value, (newVal) => {
          @select-number="selectCard"
       />
       <div v-else class="flex flex-col items-center justify-center flex-grow min-h-[calc(100vh-20rem)]">
-         <div class="flashcard-view w-full">
-            <div class="text-center my-2 text-white text-2xl current-key">Key of {{ currentKey }}</div>
-
-            <div class="relative flex items-center justify-center gap-4 px-4">
-               <button
-                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                  @click="previousCard"
-               >
-                  <span class="material-icons">arrow_back</span>
-               </button>
-
-               <FlashCard
-                  :number="filteredNumbers[currentNumber]"
-                  :current-key="currentKey"
-                  :card-classes="cardClasses"
-                  ref="flashCardRef"
-                  @next="nextCard"
-                  @previous="previousCard"
-               />
-
-               <button
-                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                  @click="nextCard"
-               >
-                  <span class="material-icons">arrow_forward</span>
-               </button>
-            </div>
-
-            <div class="progress mt-4 text-white text-center">
-               {{ currentKey }}, {{ currentNumber + 1 }}/{{ totalNumbers }}
-            </div>
-         </div>
+         <FlashCardView
+            :current-key="currentKey"
+            :number="filteredNumbers[currentNumber]"
+            :card-classes="cardClasses"
+            :current-number="currentNumber"
+            :total-numbers="totalNumbers"
+            @next="nextCard"
+            @previous="previousCard"
+            ref="flashCardRef"
+         />
       </div>
 
       <!-- Footer Navigation -->
