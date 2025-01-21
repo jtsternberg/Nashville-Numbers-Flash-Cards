@@ -15,7 +15,12 @@ export function useKeyboardNav(handlers) {
       switch (event.key) {
          case ' ':
          case 'Space':
+            // Check if a button has focus... if so, don't do anything
+            if (document.activeElement.tagName === 'BUTTON') {
+               return
+            }
             handlers.toggleFlip?.()
+            event.preventDefault()
             break
          case 'ArrowLeft':
             animateSwipe('right')
