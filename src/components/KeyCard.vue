@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useChordStore } from '../stores/chords'
+import CardIcon from './CardIcon.vue'
 
 const model = defineModel({
    type: String,
@@ -18,8 +19,6 @@ const emit = defineEmits(['select'])
 const chordStore = useChordStore()
 
 // Animation states
-
-const icon = computed(() => chordStore.getKeyIcon(model.value))
 
 function handleClick() {
    if (!props.isSelected) {
@@ -58,19 +57,10 @@ function handleClick() {
 
             <!-- Center symbol -->
             <div
-               class="absolute inset-0 flex items-center justify-center gap-1"
+               class="absolute inset-0 flex items-center justify-center"
                :class="isSelected ? 'text-purple-200' : 'text-purple-300'"
             >
-               <template v-for="(iconItem, index) in icon" :key="iconItem">
-                  <span
-                     class="material-icons"
-                     :class="icon.length > 1 ? 'text-lg tall:text-2xl' : 'text-3xl tall:text-4xl'"
-                  >{{ iconItem }}</span>
-                  <span
-                     v-if="index < icon.length - 1"
-                     class="text-xl tall:text-2xl font-light"
-                  >/</span>
-               </template>
+               <CardIcon :model-value="model" />
             </div>
 
             <!-- Bottom key indicator -->

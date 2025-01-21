@@ -234,7 +234,7 @@ watch(() => currentKey.value, (newVal) => {
 
 <style>
 .app {
-   padding: 1rem;
+   padding: 1rem 1rem 3rem;
    max-width: 2xl;
    margin: 0 auto;
    position: relative;

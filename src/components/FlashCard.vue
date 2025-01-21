@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useChordStore } from '../stores/chords'
-
+import CardCorner from './CardCorner.vue'
 const props = defineProps({
    number: {
       type: Object,
@@ -52,12 +52,14 @@ defineExpose({ toggleFlip })
             class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-300 text-purple-900 shadow-xl backface-hidden"
             aria-hidden="isFlipped"
          >
+            <CardCorner :model-value="currentKey" />
             <div class="text-6xl font-bold">{{ number.number }}</div>
          </div>
          <div
             class="absolute w-full h-full flex flex-col items-center justify-center rounded-2xl bg-purple-100 shadow-xl backface-hidden rotate-y-180"
             aria-hidden="!isFlipped"
          >
+            <CardCorner :model-value="currentKey" />
             <div class="text-6xl font-bold text-purple-600 mb-2">{{ chord }}</div>
             <div class="text-base text-gray-500">{{ number.quality }}</div>
          </div>
