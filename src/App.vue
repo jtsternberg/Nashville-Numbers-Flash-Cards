@@ -171,13 +171,6 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
             </div>
          </div> -->
 
-         <!-- Progress Bar -->
-         <div class="h-1 bg-white/20 rounded-full overflow-hidden mb-4">
-            <div
-               class="h-full bg-white transition-all duration-300"
-               :style="{ width: `${((currentNumber + 1) / totalNumbers) * 100}%` }"
-            ></div>
-         </div>
       </div>
       <KeySelector
          ref="keySelectorRef"
@@ -186,43 +179,52 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
          @select-key="setKey"
       />
 
-      <div v-if="isCheatSheetMode">
-         <CheatSheet
-            :current-key="currentKey"
-            :numbers="data.numbers"
-            @select-number="selectCard"
-         />
+      <!-- Progress Bar -->
+      <div class="h-1 bg-white/20 rounded-full overflow-hidden mt-5">
+         <div
+            class="h-full bg-white transition-all duration-300"
+            :style="{ width: `${((currentNumber + 1) / totalNumbers) * 100}%` }"
+         ></div>
       </div>
-      <div v-else class="flashcard-view">
-         <div class="text-center my-2 text-white text-2xl current-key">Key of {{ currentKey }}</div>
 
-         <div class="relative flex items-center justify-center gap-4 px-4">
-            <button
-               class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-               @click="previousCard"
-            >
-               <span class="material-icons">arrow_back</span>
-            </button>
+      <CheatSheet
+         v-if="isCheatSheetMode"
+         :current-key="currentKey"
+         :numbers="data.numbers"
+         @select-number="selectCard"
+      />
+      <div v-else class="flex flex-col items-center justify-center flex-grow min-h-[calc(100vh-20rem)]">
+         <div class="flashcard-view w-full">
+            <div class="text-center my-2 text-white text-2xl current-key">Key of {{ currentKey }}</div>
 
-            <FlashCard
-               :number="filteredNumbers[currentNumber]"
-               :current-key="currentKey"
-               :card-classes="cardClasses"
-               ref="flashCardRef"
-               @next="nextCard"
-               @previous="previousCard"
-            />
+            <div class="relative flex items-center justify-center gap-4 px-4">
+               <button
+                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                  @click="previousCard"
+               >
+                  <span class="material-icons">arrow_back</span>
+               </button>
 
-            <button
-               class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-               @click="nextCard"
-            >
-               <span class="material-icons">arrow_forward</span>
-            </button>
-         </div>
+               <FlashCard
+                  :number="filteredNumbers[currentNumber]"
+                  :current-key="currentKey"
+                  :card-classes="cardClasses"
+                  ref="flashCardRef"
+                  @next="nextCard"
+                  @previous="previousCard"
+               />
 
-         <div class="progress mt-4 text-white text-center">
-            {{ currentKey }}, {{ currentNumber + 1 }}/{{ totalNumbers }}
+               <button
+                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                  @click="nextCard"
+               >
+                  <span class="material-icons">arrow_forward</span>
+               </button>
+            </div>
+
+            <div class="progress mt-4 text-white text-center">
+               {{ currentKey }}, {{ currentNumber + 1 }}/{{ totalNumbers }}
+            </div>
          </div>
       </div>
 
