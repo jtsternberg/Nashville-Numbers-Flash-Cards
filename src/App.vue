@@ -20,7 +20,6 @@ const flashCardRef = ref(null)
 const keySelectorRef = ref(null)
 const isKeyChanging = ref(false)
 
-
 const showSharpsAndFlats = computed(() => settings.showSharpsAndFlats)
 
 // Filter numbers based on settings
@@ -71,11 +70,8 @@ function previousCard() {
    }
 }
 
-function setKey(key) {
-   if (currentKey.value === key) return
-
+function afterSetKey(key) {
    isKeyChanging.value = true
-   currentKey.value = key
    currentNumber.value = 0
 
    // Scroll the key selector to the new key
@@ -87,6 +83,12 @@ function setKey(key) {
    setTimeout(() => {
       isKeyChanging.value = false
    }, 600)
+}
+
+function setKey(key) {
+   if (currentKey.value === key) return
+
+   currentKey.value = key
 }
 
 function toggleView() {
@@ -143,6 +145,10 @@ watch(() => settings.showSharpsAndFlats, (newVal) => {
       setKey(data.keysNoSharpsAndFlats[0])
    }
 })
+// Watch for currentKey changes and scroll to it
+watch(() => currentKey.value, (newVal) => {
+   afterSetKey(newVal)
+}, { immediate: true })
 </script>
 
 <template>

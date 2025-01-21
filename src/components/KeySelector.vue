@@ -24,20 +24,12 @@ function scrollToKey(key) {
    }
 }
 
-// Scroll to initial key on mount
-onMounted(() => {
-   // Use a small delay to ensure the DOM is fully rendered
-   setTimeout(() => {
-      scrollToKey(props.currentKey)
-   }, 100)
-})
-
 defineExpose({ scrollToKey })
 </script>
 
 <template>
-   <div class="overflow-x-auto py-4 hide-scrollbar">
-      <div class="flex gap-2 px-4">
+   <div class="overflow-x-auto py-4 hide-scrollbar overflow-visible">
+      <div class="flex gap-2 px-4 overflow-visible">
          <!-- <div
             v-for="key in keys"
             :key="key"

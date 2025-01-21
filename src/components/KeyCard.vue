@@ -18,25 +18,19 @@ const emit = defineEmits(['select'])
 const chordStore = useChordStore()
 
 // Animation states
-const isMovingToFront = ref(false)
-const isSpread = ref(false)
 
 const icon = computed(() => chordStore.getKeyIcon(model.value))
 
 function handleClick() {
    if (!props.isSelected) {
-      isMovingToFront.value = true
-      setTimeout(() => {
-         isSpread.value = true
-         emit('select')
-      }, 300)
+      emit('select')
    }
 }
 </script>
 
 <template>
    <div
-      class="relative cursor-pointer transition-all duration-300 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-xl p-1"
+      class="relative cursor-pointer transition-all duration-300 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 rounded-xl p-4 -m-3 overflow-visible"
       @click="handleClick"
       @keydown.enter="handleClick"
       @keydown.space.prevent="handleClick"
@@ -47,10 +41,11 @@ function handleClick() {
    >
       <!-- Card container -->
       <div
-         class="w-24 h-36 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl"
+         class="w-24 h-36 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl bg-gradient-to-br from-purple-900 to-purple-950"
          :class="[
-            isSelected ? 'ring-2 ring-purple-400 shadow-purple-400/30' : 'hover:shadow-purple-400/20',
-            'bg-gradient-to-br from-purple-900 to-purple-950'
+            isSelected
+               ? 'ring-2 ring-purple-400 -translate-y-1 shadow-2xl'
+               : '',
          ]"
       >
          <!-- Card content -->

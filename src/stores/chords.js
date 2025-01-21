@@ -11,7 +11,6 @@ export const useChordStore = defineStore('chords', {
 			const [baseKey, keyModifier] = key.split('/')
 			if (baseKey && keyModifier) {
 				// If key looks like A#/Bb, we need to split it into A# and Bb, and send back BOTH icons
-				console.log({baseKey, keyModifier, icons: [state.data.keyIcons[baseKey], state.data.keyIcons[keyModifier]]})
 				return [state.data.keyIcons[baseKey], state.data.keyIcons[keyModifier]]
 			}
 			return [state.data.keyIcons[key] || 'music_note']
