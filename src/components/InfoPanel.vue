@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { version } from '../../package.json'
+import InstallPrompt from './InstallPrompt.vue'
 
 const isOpen = ref(false)
 const lastUpdated = __BUILD_TIME__
@@ -82,7 +83,7 @@ async function handleRefresh() {
       >
          <div
             v-if="isOpen"
-            class="absolute right-0 top-11 mt-2 w-64 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 text-purple-900 border border-white/20 z-50"
+            class="absolute right-0 top-11 mt-2 w-80 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg p-4 text-purple-900 border border-white/20 z-50"
          >
             <h3 class="text-lg font-semibold mb-4 text-purple-900/90">About</h3>
 
@@ -102,6 +103,11 @@ async function handleRefresh() {
                   <span class="text-sm text-purple-900/70">
                      <a href="mailto:me@jtsternberg.com?subject=Nashville%20Numbers%20App%20Inquiry">Justin Sternberg</a>
                   </span>
+               </div>
+
+               <div class="mt-4 pt-4 border-t border-purple-900/10">
+                  <h4 class="text-sm font-semibold mb-2">Install App</h4>
+                  <InstallPrompt />
                </div>
 
                <button

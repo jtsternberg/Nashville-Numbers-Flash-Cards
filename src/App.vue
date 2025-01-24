@@ -10,6 +10,7 @@ import { useKeyboardNav } from './composables/useKeyboardNav'
 import { useSettingsStore } from './stores/settings'
 import FlashCardNav from './components/FlashCardNav.vue'
 import FlashCardView from './components/FlashCardView.vue'
+import FirstViewNotice from './components/FirstViewNotice.vue'
 
 const settings = useSettingsStore()
 const currentKey = computed({
@@ -229,6 +230,8 @@ watch(() => currentKey.value, (newVal) => {
 
       <!-- Add padding to prevent content from being hidden behind footer -->
       <div class="h-20"></div>
+
+      <FirstViewNotice />
    </div>
 </template>
 
