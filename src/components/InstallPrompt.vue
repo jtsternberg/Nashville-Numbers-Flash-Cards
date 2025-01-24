@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import { useInstallPrompt } from '../composables/useInstallPrompt'
 
-const { deferredPrompt, initInstallPrompt, installApp } = useInstallPrompt()
+const { deferredPrompt, initInstallPrompt, installApp, isInstalled } = useInstallPrompt()
 
 onMounted(() => {
    initInstallPrompt()
@@ -10,7 +10,7 @@ onMounted(() => {
 </script>
 
 <template>
-   <div>
+   <div v-if="!isInstalled">
       <template v-if="deferredPrompt">
          <p class="text-sm text-purple-900/70 mb-2">Install this app on your device for quick access and offline use.</p>
          <button

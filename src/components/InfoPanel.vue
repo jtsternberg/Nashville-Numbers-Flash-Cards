@@ -2,10 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { version } from '../../package.json'
 import InstallPrompt from './InstallPrompt.vue'
+import { useInstallPrompt } from '../composables/useInstallPrompt'
 
 const isOpen = ref(false)
 const lastUpdated = __BUILD_TIME__
 const updateAvailable = ref(false)
+const { isInstalled } = useInstallPrompt()
 let registration = null
 
 onMounted(async () => {
@@ -105,7 +107,7 @@ async function handleRefresh() {
                   </span>
                </div>
 
-               <div class="mt-4 pt-4 border-t border-purple-900/10">
+               <div v-if="!isInstalled" class="mt-4 pt-4 border-t border-purple-900/10">
                   <h4 class="text-sm font-semibold mb-2">Install App</h4>
                   <InstallPrompt />
                </div>

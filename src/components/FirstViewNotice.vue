@@ -4,13 +4,13 @@ import InstallPrompt from './InstallPrompt.vue'
 import { useInstallPrompt } from '../composables/useInstallPrompt'
 
 const isVisible = ref(false)
-const { deferredPrompt } = useInstallPrompt()
+const { deferredPrompt, isInstalled } = useInstallPrompt()
 const hasInstallButton = computed(() => !!deferredPrompt.value)
 
 onMounted(() => {
-   // Check if notice was previously dismissed
+   // Don't show if already installed or previously dismissed
    const dismissed = localStorage.getItem('install-notice-dismissed')
-   if (!dismissed) {
+   if (!dismissed && !isInstalled.value) {
       isVisible.value = true
    }
 })

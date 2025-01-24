@@ -1,9 +1,20 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const deferredPrompt = ref(null)
 
 export function useInstallPrompt() {
+   const isInstalled = computed(() => {
+      return Boolean(
+         window.matchMedia('(display-mode: standalone)').matches
+         // iOS
+         || navigator.standalone
+      )
+   })
+
    function initInstallPrompt() {
+      // Don't initialize if already installed
+      if (isInstalled.value) return
+
       // Listen for 'beforeinstallprompt' event
       window.addEventListener('beforeinstallprompt', (e) => {
          e.preventDefault()
@@ -27,6 +38,7 @@ export function useInstallPrompt() {
    return {
       deferredPrompt,
       initInstallPrompt,
-      installApp
+      installApp,
+      isInstalled
    }
 }
