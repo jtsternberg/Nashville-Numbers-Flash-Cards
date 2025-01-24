@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue'
 import InstallPrompt from './InstallPrompt.vue'
 import { useInstallPrompt } from '../composables/useInstallPrompt'
+import ShareButton from './ShareButton.vue'
 
 const isVisible = ref(false)
 const { deferredPrompt, isInstalled } = useInstallPrompt()
@@ -48,13 +49,17 @@ function dismiss() {
 
             <InstallPrompt />
 
-            <div v-if="hasInstallButton" class="mt-4 text-center">
+
+            <div v-if="hasInstallButton" class="mt-4 flex justify-center gap-4">
                <button
                   @click="dismiss"
                   class="text-sm text-purple-900/50 hover:text-purple-900 transition-colors"
-               >
+                  >
                   No thank you, maybe later
                </button>
+            </div>
+            <div class="mt-8 flex justify-center gap-4">
+               <ShareButton />
             </div>
          </div>
       </div>

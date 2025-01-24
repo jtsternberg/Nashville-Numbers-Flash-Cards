@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { version } from '../../package.json'
 import InstallPrompt from './InstallPrompt.vue'
 import { useInstallPrompt } from '../composables/useInstallPrompt'
+import ShareButton from './ShareButton.vue'
 
 const isOpen = ref(false)
 const lastUpdated = __BUILD_TIME__
@@ -111,6 +112,8 @@ async function handleRefresh() {
                   <h4 class="text-sm font-semibold mb-2">Install App</h4>
                   <InstallPrompt />
                </div>
+
+               <ShareButton class="mt-4" full-width />
 
                <button
                   @click="handleRefresh"

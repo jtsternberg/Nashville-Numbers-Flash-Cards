@@ -11,6 +11,7 @@ import { useSettingsStore } from './stores/settings'
 import FlashCardNav from './components/FlashCardNav.vue'
 import FlashCardView from './components/FlashCardView.vue'
 import FirstViewNotice from './components/FirstViewNotice.vue'
+import Toast from './components/Toast.vue'
 
 const settings = useSettingsStore()
 const currentKey = computed({
@@ -232,6 +233,7 @@ watch(() => currentKey.value, (newVal) => {
       <div class="h-20"></div>
 
       <FirstViewNotice />
+      <Toast />
    </div>
 </template>
 
