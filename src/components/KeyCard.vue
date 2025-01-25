@@ -51,7 +51,7 @@ function handleClick() {
          <div class="w-full h-full p-3 relative">
             <!-- Top key indicator -->
             <span
-               class="absolute top-2 left-2 text-l font-bold"
+               class="absolute top-2 left-2 text-l font-bold font-mono"
                :class="isSelected ? 'text-purple-200' : 'text-purple-300'"
             >{{ model }}</span>
 
@@ -65,7 +65,7 @@ function handleClick() {
 
             <!-- Bottom key indicator -->
             <span
-               class="absolute bottom-2 right-2 text-l font-bold rotate-180"
+               class="absolute bottom-2 right-2 text-l font-bold rotate-180 font-mono"
                :class="isSelected ? 'text-purple-200' : 'text-purple-300'"
             >{{ model }}</span>
          </div>
