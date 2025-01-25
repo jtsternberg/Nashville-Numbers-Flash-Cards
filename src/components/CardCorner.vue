@@ -18,10 +18,10 @@ const props = defineProps({
 <template>
    <div class="absolute top-4 left-4 flex flex-row gap-2 text-2xl font-bold">
       <CardIcon :model-value="model" size="small" />
-      {{ model }}
+      <slot/>
    </div>
    <div class="absolute bottom-4 right-4 flex flex-row gap-2 text-2xl font-bold rotate-180">
       <CardIcon :model-value="model" size="small" />
-      {{ model }}
+      <slot/>
    </div>
 </template>
