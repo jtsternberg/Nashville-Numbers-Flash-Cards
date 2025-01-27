@@ -20,7 +20,7 @@ export default defineConfig({
             name: 'Nashville Number System',
             short_name: 'Nashville Numbers',
             description: 'Nashville Number System Flash Cards',
-            theme_color: '#ffffff',
+            theme_color: '#581C87',
             icons: [
                {
                   src: 'pwa-192x192.png',
